@@ -1,0 +1,59 @@
+
+.title{
+  font-family: "verdana";
+  color: #0066ff;
+  font-size: 1.2em;
+  padding-top:0.75em;
+  padding-bottom:0.75em;
+  padding-left: 0.5em;
+  border-bottom: 0.1em solid #0066ff;
+  position: fixed;
+  width: 100%;
+  background-color: white;
+}
+
+.body{
+  padding-left: 0.5em;
+  padding-top: 3.75em;
+}
+
+#the_counter{
+  font-family: "Verdana";
+  color: #1a1a1a;
+  font-style: italic;
+  font-size: 0.7em;
+  padding-top: 0.2em;
+  padding-bottom: 1em;
+}
+
+#identity{
+  font-family: "Verdana";
+  font-size: 0.9em;
+  padding-bottom: 1em;
+}
+
+#information{
+  font-family: "Verdana";
+  font-size: 0.8em;
+  color: #808080;
+  padding-right: 2em;
+  padding-bottom: 1em;
+  padding-top: 2em;
+  bottom: 1em;
+}
+
+#check_text{
+  font-family: "Verdana";
+  font-size: 0.8em;
+  font-weight: normal;
+}
+
+#check_text2{
+  font-family: "Verdana";
+  font-size: 0.8em;
+  font-weight: normal;
+}
+
+a{
+  color: #808080;
+}
