@@ -92,27 +92,31 @@ get_person <- function(){
   list(nation, inc)
 }
 
-# actually store the dat
+########## Now call the functions to generate the plot #########
+
+# Call the function that generates the data
 dat <- get_dat()
 
 
-# save_dat5 <- data.frame(matrix(nrow=10000, ncol=1))
-# colnames(save_dat5) <- c("income")
-# for(i in 1:10000){
-#   save_dat5[i,1] <- get_person()[2]
-# }
-# 
-# final_dist <- rbind(
-#   save_dat, save_dat2, save_dat3, save_dat4, save_dat5
-# )
-# 
-# write_csv(final_dist, "fifty-k_points.csv")
+##### Note: these lines before the full pound line can be commented out after they are run once ######
+# Get a dataset of 50,000 points to draw from
+save_dat <- data.frame(matrix(nrow=50000, ncol=1))
+colnames(save_dat5) <- c("income")
+for(i in 1:50000){
+  save_dat[i,1] <- get_person()[2]
+}
 
-# plot_dat <- 
-#   read_csv("fifty-k_points.csv") %>% 
-#   arrange(income)
-# saveRDS(plot_dat, "global_50k_dat.Rdata")
+# Save the 50k as csv
+write_csv(save_dat, "fifty-k_points.csv")
 
+# Save the 50k as an RDS for even faster reads 
+plot_dat <-
+  read_csv("fifty-k_points.csv") %>%
+  arrange(income)
+saveRDS(plot_dat, "global_50k_dat.Rdata")
+#################################################################################################################
+
+# Create the vert line
 vline <- function(x = 0, color = 'rgb(10, 10, 10)') {
   list(
     type = "line", 
@@ -125,15 +129,17 @@ vline <- function(x = 0, color = 'rgb(10, 10, 10)') {
   )
 }
 
+# Read-in the plot data
 plot_dat <- readRDS("global_50k_dat.Rdata")
 
+# Create the distribution and labels
 dsty <- density(plot_dat$income, adjust=0.001, n=1024)
 final_dist_samp <- plot_dat[seq(1, nrow(plot_dat), nrow(plot_dat)/100),]
 dat_dnsty <- approx(dsty$x, dsty$y, final_dist_samp$income)
-
 dat_dnsty$quant <- c(0:99)
 dat_dnsty$text <- paste0(dollar_format()(round(dat_dnsty$x, -2)), "\n", dat_dnsty$quant, "%tile income")
 
+# Generate the plot
 m <- list(
   l = 50,
   r = 150,
@@ -149,6 +155,7 @@ global_plot <- plot_ly(x = ~dat_dnsty$x, y = ~dat_dnsty$y, text = ~dat_dnsty$tex
                         yaxis = list(title = 'People', showticklabels = FALSE, fixedrange=TRUE),
                         margin = m)
 
+# Generate the plot for mobile devices
 global_plot.mobile <- ggplot(plot_dat, aes(x=income)) + geom_density(color = 'white', fill='#66a3ff') +
   theme_hc() +
   xlab('Annual Income (PPP Adjusted to US$)') +
@@ -157,6 +164,7 @@ global_plot.mobile <- ggplot(plot_dat, aes(x=income)) + geom_density(color = 'wh
         axis.ticks.y = element_blank())+
   scale_x_continuous(labels = dollar, limits = c(0,90000))
 
+# A function that is used to determine whether or not the app was opened on a mobile device
 mobileDetect <- function(inputId, value = 0) {
   tagList(
     singleton(tags$head(tags$script(src = "js/mobile.js"))),

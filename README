@@ -1,0 +1,10 @@
+README
+
+This code generates the Shiny app hosted at https://domrussel.shinyapps.io/Person_App/. Most of the code is in two R scripts:
+
+1. app.R, which includes both the Shiny UI and Server
+2. func.R which includes helper functions that read in and clean World Bank income data, calculates the Lorenz cdf, randomly generates a person, and creates the plot. It also creates a set of 50,000 people that is used for the plot, and generates the plot.
+
+The data come from the World Bank, and can be found here: https://databank.worldbank.org/home.aspx
+
+The files in www create custom styling, including JS that makes the app mobile friendly. The code to detect whether you are on a mobile device largely comes from: https://g3rv4.com/2017/08/shiny-detect-mobile-browsers
